@@ -19,15 +19,15 @@ plt.style.use('seaborn')
 #Import datasets
 X_train = pd.read_csv('dataset/X_train.csv') 
 X_test = pd.read_csv('dataset/X_test.csv')
-Y_train_DCR = pd.read_csv('dataset//Y_train_DCR.csv')
-Y_test_DCR = pd.read_csv('dataset/Y_test_DCR.csv')
+Y_train_all = pd.read_csv('dataset//Y_train_DCR.csv')
+Y_test_all = pd.read_csv('dataset/Y_test_DCR.csv')
 
 # Extract the features
 X_train=X_train[['IT/CTIT', 'PDL1/1/149/50', 'LineaDiTerapiaICI', 'StageBasaleIO',  'BMIIoBasal', 'PS Baseline IO', 'NodeStage_IO', 'MLiverBasale',  'LeukocytesIOBasal', 'NeutrophylsiAlBasale', 'MonocytesalBasale', 'LymphocytesAlBasale', 'NLR','LDHAlBasale', 'SquamousNonSquamous', 'SurgeryY/N', 'AgeAtIO', 'Gender', 'stadioAllaDiagnosi', 'fumoAllaDiagnosi', 'TumorStage_IO', 'RTPreIT', 'MBoneBasale', 'MPleuraBasale', 'MLinfonodiBasale', 'MSurreneBasale', 'MBrainBasale']]
 X_test=X_test[['IT/CTIT', 'PDL1/1/149/50', 'LineaDiTerapiaICI', 'StageBasaleIO',  'BMIIoBasal', 'PS Baseline IO', 'NodeStage_IO', 'MLiverBasale', 'LeukocytesIOBasal', 'NeutrophylsiAlBasale', 'MonocytesalBasale', 'LymphocytesAlBasale', 'NLR', 'LDHAlBasale', 'SquamousNonSquamous', 'SurgeryY/N', 'AgeAtIO', 'Gender', 'stadioAllaDiagnosi', 'fumoAllaDiagnosi', 'TumorStage_IO', 'RTPreIT', 'MBoneBasale', 'MPleuraBasale', 'MLinfonodiBasale', 'MSurreneBasale', 'MBrainBasale']]
 
-Y_train_DCR = Y_train_DCR['DCR '] #change the outcome
-Y_test_DCR = Y_test_DCR['DCR ']   #change the outcome
+Y_train_all = Y_train_DCR['DCR '] # select DCR as outcome
+Y_test_all = Y_test_DCR['DCR ']   # select DCR as outcome
 
 #converting categorical features into int
 X_train[['IT/CTIT',  'SquamousNonSquamous', 'PDL1/1/149/50', 'LineaDiTerapiaICI', 'StageBasaleIO', 'PS Baseline IO', 'NodeStage_IO',  'MLiverBasale','SurgeryY/N','Gender','stadioAllaDiagnosi', 'fumoAllaDiagnosi', 'MLinfonodiBasale', 'MSurreneBasale', 'MBrainBasale','TumorStage_IO', 'RTPreIT', 'MBoneBasale','MPleuraBasale']]=X_train[['IT/CTIT',  'SquamousNonSquamous', 'PDL1/1/149/50', 'LineaDiTerapiaICI', 'StageBasaleIO', 'PS Baseline IO', 'NodeStage_IO',  'MLiverBasale','SurgeryY/N','Gender','stadioAllaDiagnosi', 'fumoAllaDiagnosi', 'MLinfonodiBasale', 'MSurreneBasale', 'MBrainBasale','TumorStage_IO', 'RTPreIT','MBoneBasale','MPleuraBasale']].astype(int)
@@ -36,7 +36,6 @@ print(X_train.dtypes)
 
 #selecting categorical features for CatBoost
 categorical_features_indices = np.where(X_train.dtypes == 'int32')[0]
-X_train.dtypes
 categorical_features_indices=categorical_features_indices.astype(int) 
 categorical_features_indices
 
@@ -100,7 +99,6 @@ model.fit(train_pool)
 '''
 #showing metrics on training set
 Y_pred_training_DCR = model.predict(X_train)
-from sklearn import metrics
 print('The accuracy on training is :\t', metrics.accuracy_score(Y_train_DCR, Y_pred_training_DCR))
 
 # cross_validation 
@@ -157,7 +155,6 @@ plt.title('ROC curve')
 plt.xlabel('False Positive Rate')
 # y label
 plt.ylabel('True Positive rate')
-
 plt.legend(loc='best')
 plt.savefig('results/ROC_DCR_B',dpi=300)
 plt.show()
@@ -170,12 +167,12 @@ df_cm.columns.name = 'Predicted response'
 plt.figure(figsize = (10,7))
 sns.set(font_scale=1.4)
 sns.heatmap(df_cm,
-                 cmap="YlGnBu",
-                 annot=True,
-                 annot_kws={"size": 16},
-                 vmin=0,
-                 vmax=35
-                )
+            cmap="YlGnBu",
+            annot=True,
+            annot_kws={"size": 16},
+            vmin=0,
+            vmax=35
+)
 plt.savefig('results/confusionmatrix_DCR.png',dpi=300)
 
 #renaming columns for SHAP plot
