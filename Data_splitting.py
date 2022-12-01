@@ -17,7 +17,8 @@ import shap
 '''
     1- Load and prepare data
 '''
-database = pd.read_csv('../Database/RW_DATA_CUT-OFF_17.06.2021.csv')
+input_file = "../Database/RW_DATA_CUT-OFF_17.06.2021.csv" # I guess for the final delivery, we can set this to None and say: load your data here
+database = pd.read_csv(input_file)
 database = pd.DataFrame(database)
 
 database.info
@@ -50,7 +51,7 @@ Y_test_PFS3=Y_test_all['PFSMesi3']
 Y_train_TTF3=Y_train_all['TTFCoded3']
 Y_test_TTF3=Y_test_all['TTFCoded3']
 
-with open('../Database/Final_datasets/datasplits.txt', 'w') as f1:
+with open('dataset/datasplits_info.txt', 'w') as f1:
     print('Y_train_DCR:',Y_train_DCR.value_counts(), file=f1)
     print('Y_test_DCR:',Y_test_DCR.value_counts(), file=f1)
     print('Y_train_OS6:',Y_train_OS6.value_counts(), file=f1)
@@ -108,18 +109,18 @@ X_test=X_test.drop(['MetastasisStage_IO'], axis = 1)
     4- Save the dataset after missing-value imputation
 '''
 # Input features (train and test)
-X_train.to_csv('../Database/Final_datasets/X_train.csv')
-X_test.to_csv('../Database/Final_datasets/X_test.csv')
+X_train.to_csv('dataset/X_train.csv')
+X_test.to_csv('dataset/X_test.csv')
 # Outcomes (train and test)
-Y_train_DCR.to_csv('../Database/Final_datasets/Y_train_DCR.csv')
-Y_test_DCR.to_csv('../Database/Final_datasets/Y_test_DCR.csv')
-Y_train_OS6.to_csv('../Database/Final_datasets/Y_train_OS6.csv')
-Y_test_OS6.to_csv('../Database/Final_datasets/Y_test_OS6.csv')
-Y_train_ORR.to_csv('../Database/Final_datasets/Y_train_ORR.csv')
-Y_test_ORR.to_csv('../Database/Final_datasets/Y_test_ORR.csv')
-Y_train_OS24.to_csv('../Database/Final_datasets/Y_train_OS24.csv')
-Y_test_OS24.to_csv('../Database/Final_datasets/Y_test_OS24.csv')
-Y_train_PFS3.to_csv('../Database/Final_datasets/Y_train_PFS3.csv')
-Y_test_PFS3.to_csv('../Database/Final_datasets/Y_test_PFS3.csv')
-Y_train_TTF3.to_csv('../Database/Final_datasets/Y_train_TTF3.csv')
-Y_test_TTF3.to_csv('../Database/Final_datasets/Y_test_TTF3.csv')
+Y_train_DCR.to_csv('dataset/Y_train_DCR.csv')
+Y_test_DCR.to_csv('dataset/Y_test_DCR.csv')
+Y_train_OS6.to_csv('dataset/Y_train_OS6.csv')
+Y_test_OS6.to_csv('dataset/Y_test_OS6.csv')
+Y_train_ORR.to_csv('dataset/Y_train_ORR.csv')
+Y_test_ORR.to_csv('dataset/Y_test_ORR.csv')
+Y_train_OS24.to_csv('dataset/Y_train_OS24.csv')
+Y_test_OS24.to_csv('dataset/Y_test_OS24.csv')
+Y_train_PFS3.to_csv('dataset/Y_train_PFS3.csv')
+Y_test_PFS3.to_csv('dataset/Y_test_PFS3.csv')
+Y_train_TTF3.to_csv('dataset/Y_train_TTF3.csv')
+Y_test_TTF3.to_csv('dataset/Y_test_TTF3.csv')
