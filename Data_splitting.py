@@ -1,21 +1,22 @@
-
-import pandas as pd
-import numpy as np
+#!/usr/bin/env python
+import sys
+import pandas as pd; import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from sklearn import metrics
 from sklearn.metrics import classification_report,confusion_matrix
 import scikitplot as skplt
 from catboost import CatBoostClassifier, Pool, metrics, cv
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import make_scorer, accuracy_score, f1_score, roc_curve, roc_auc_score
+from sklearn.metrics import accuracy_score, f1_score, roc_curve, roc_auc_score
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
-import seaborn as sns
-import matplotlib.pyplot as plt
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
+import seaborn as sns; import matplotlib.pyplot as plt
 import shap
-import sys
 
 
-
+'''
+    1- Load and prepare data
+'''
 database = pd.read_csv('../Database/RW_DATA_CUT-OFF_17.06.2021.csv')
 database = pd.DataFrame(database)
 
@@ -63,10 +64,9 @@ with open('../Database/Final_datasets/datasplits.txt', 'w') as f1:
     print('Y_train_TTF3:',Y_train_TTF3.value_counts(), file=f1)
     print('Y_test_TTF3:',Y_test_TTF3.value_counts(), file=f1)
 
-#2IMMPUTING MISSING DATA (USING JUST TRAIN TO CALCULATE MISSING DATA)
-from sklearn.experimental import enable_iterative_imputer
-from sklearn.impute import IterativeImputer
-
+'''
+    2- Impute missing data (using only the train set)
+'''
 # print total missing
 print('Missing: %d' % X_train_raw.isnull().sum().sum())
 # define imputer
@@ -84,11 +84,13 @@ print('Missing: %d' % X_train.isnull().sum().sum())
 print('Missing: %d' % X_test.isnull().sum().sum())
 
 
-#3FEATURE SELECTION
+'''
+    3- FEATURE SELECTION
+'''
 plt.figure(figsize=(30, 20))
 heatmap = sns.heatmap(X_train.corr(), vmin=-1, vmax=1, annot=True)
 heatmap.set_title('Correlation Heatmap', fontdict={'fontsize':12}, pad=12);
-plt.savefig('../CatBoost/Final_results/heatmap.png', bbox_inches='tight')
+plt.savefig('feature_correlation_heatmap.png', bbox_inches='tight')
 
 cor_matrix = X_train.corr().abs()
 print(cor_matrix)
@@ -102,11 +104,13 @@ X_train=X_train.drop(['MetastasisStage_IO'], axis = 1)
 X_test=X_test.drop(['MetastasisStage_IO'], axis = 1)
 
 
-    
-#SAVING DATASET AFTER IMMPUTATION AND FEATURE SELECTION
+'''
+    4- Save the dataset after missing-value imputation
+'''
+# Input features (train and test)
 X_train.to_csv('../Database/Final_datasets/X_train.csv')
 X_test.to_csv('../Database/Final_datasets/X_test.csv')
-#outcomes
+# Outcomes (train and test)
 Y_train_DCR.to_csv('../Database/Final_datasets/Y_train_DCR.csv')
 Y_test_DCR.to_csv('../Database/Final_datasets/Y_test_DCR.csv')
 Y_train_OS6.to_csv('../Database/Final_datasets/Y_train_OS6.csv')
@@ -119,4 +123,3 @@ Y_train_PFS3.to_csv('../Database/Final_datasets/Y_train_PFS3.csv')
 Y_test_PFS3.to_csv('../Database/Final_datasets/Y_test_PFS3.csv')
 Y_train_TTF3.to_csv('../Database/Final_datasets/Y_train_TTF3.csv')
 Y_test_TTF3.to_csv('../Database/Final_datasets/Y_test_TTF3.csv')
-
