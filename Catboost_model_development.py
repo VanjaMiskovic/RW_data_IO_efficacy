@@ -130,12 +130,6 @@ Y_pred_DCR = model.predict(X_test)
 print('The accuracy on testing is :\t', metrics.accuracy_score(Y_test_DCR, Y_pred_DCR))
 print(classification_report(Y_test_DCR, Y_pred_DCR))
 
-#Feature importance
-feature_importances = model.get_feature_importance(train_pool)
-feature_names = X_train.columns
-for score, name in sorted(zip(feature_importances, feature_names), reverse=True):
-    print('{}: {}'.format(name, score))
-
 
 # roc curve for models
 fpr1, tpr1, thresh1 = roc_curve(Y_test_DCR, Y_pred_DCR, pos_label=1)
@@ -182,6 +176,13 @@ X_test.rename(columns ={'IT/CTIT':'IO/IOCT', 'SurgeryY/N':'Surgery', 'AgeAtIO':'
 '''
     4- Explainability
 '''
+#Feature importance
+feature_importances = model.get_feature_importance(train_pool)
+feature_names = X_train.columns
+for score, name in sorted(zip(feature_importances, feature_names), reverse=True):
+    print('{}: {}'.format(name, score))
+
+
 #SHAP
 explainer = shap.Explainer(model)
 shap_values = explainer(X_test)
