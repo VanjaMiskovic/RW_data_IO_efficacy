@@ -97,7 +97,8 @@ cor_matrix = X_train.corr().abs()
 print(cor_matrix)
 
 upper_tri = cor_matrix.where(np.triu(np.ones(cor_matrix.shape),k=1).astype(bool))
-to_drop = [column for column in upper_tri.columns if any(upper_tri[column] > 0.80)]
+to_drop_1 = [column for column in upper_tri.columns if any(upper_tri[column] > 0.80)]
+to_drop_2 = [column for column in upper_tri.columns if any(upper_tri[column] < -0.80)]
 print(); print(to_drop)
 
 #only one feature has correlation higher than .8 and is removed
