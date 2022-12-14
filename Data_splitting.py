@@ -17,7 +17,7 @@ import shap
 '''
     1- Load and prepare data
 '''
-input_file = "../Database/RW_DATA_CUT-OFF_17.06.2021.csv" # I guess for the final delivery, we can set this to None and say: load your data here
+input_file = "None" #Load your data here
 database = pd.read_csv(input_file)
 database = pd.DataFrame(database)
 
