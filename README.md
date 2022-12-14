@@ -1,5 +1,5 @@
 # RW_data_IO_efficacy
-## Real-world data to build explainable trustworthy artificial intelligence models for NSCLC efficacy in patients treated with immune-based therapy
+## Real-world data to build explainable trustworthy artificial intelligence models for prediction of immunotherapy efficacy in NSCLC patients
 
 Codes in this repository are used for our publication [Real-world data to build explainable trustworthy artificial intelligence models for prediction of immunotherapy efficacy in NSCLC patients](https://www.frontiersin.org/my-frontiers/overview). 
 
