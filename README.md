@@ -1,7 +1,7 @@
 # RW_data_IO_efficacy
 ## Real-world data to build explainable trustworthy artificial intelligence models for prediction of immunotherapy efficacy in NSCLC patients
 
-Codes in this repository are used for our publication [Real-world data to build explainable trustworthy artificial intelligence models for prediction of immunotherapy efficacy in NSCLC patients]([https://www.frontiersin.org/my-frontiers/overview](https://www.frontiersin.org/articles/10.3389/fonc.2022.1078822/full?utm_source=F-NTF&utm_medium=EMLX&utm_campaign=PRD_FEOPS_20170000_ARTICLE). 
+Codes in this repository are used for our publication [Real-world data to build explainable trustworthy artificial intelligence models for prediction of immunotherapy efficacy in NSCLC patients]([https://www.frontiersin.org/my-frontiers/overview](https://www.frontiersin.org/articles/10.3389/fonc.2022.1078822/full?utm_source=F-NTF&utm_medium=EMLX&utm_campaign=PRD_FEOPS_20170000_ARTICLE)). 
 
 *Data_splitting.py* - Splits the data into test and training set, and finds the correlation in features
 
